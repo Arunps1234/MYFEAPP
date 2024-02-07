@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import Male from "./Assets/Male.png"
 import Female from  "./Assets/Female.png"
+import { Link } from 'react-router-dom'
 
 
 const Home = () => {
@@ -28,11 +29,13 @@ const Home = () => {
     }
     return (
         <>
-
+<div>
+    <Link to="/create" className='btn btn-primary' style={{float:"right"}}>Create User</Link>
+</div>
 
             <div style={{ width: "100%" }}>
                 {deletemessage &&
-                    <div className='alert alert-success' style={{ textAlign: "center" }}>{deletemessage}</div>
+                    <div className='alert alert-success' style={{ textAlign: "center", height:"20px" }}>{deletemessage}</div>
                 }
             </div>
             <div style={{ margin: "50px" }}>
@@ -70,7 +73,7 @@ const Home = () => {
                                             <img src={Female} style={{width:"80px", height:"80px"}}/>
                                         }
                                     </td>
-                                    <td >
+                                    <td style={{display:"flex"}}>
                                         <button className='btn btn-warning' style={{ width: "100px" }}>Edit</button> &nbsp;
                                         <button className='btn btn-danger' style={{ width: "100px" }} onClick={() => deleteUser(user._id)}> Delete</button>
 

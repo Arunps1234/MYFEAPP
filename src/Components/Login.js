@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./Login.css"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Login  = ()=>{
 
@@ -45,7 +45,7 @@ axios.post("http://localhost:5080/API/Auth/login", data).then(res=>{
 }
         <div style={{width:"50%"}} className="loginform">
 <form className="form-group" onSubmit={submitSignIn}>
-
+<h3 style={{textAlign:"center"}}>Login in to your account</h3>
 
 <div >
     <label className="form-label">Email</label>
@@ -60,6 +60,10 @@ axios.post("http://localhost:5080/API/Auth/login", data).then(res=>{
 <br/>
 <div >
 <button className="btn btn-success" style={{width:"100%"}}>Sign In</button>
+
+<div style={{textAlign:"center"}}>
+    <span>Dont have an account? <Link to="/">Sign Up</Link></span>
+</div>
 </div>
 
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import "./SignUp.css"
 import axios from "axios"
+import {Link} from "react-router-dom"
 
 
 
@@ -48,7 +49,7 @@ const SignUp = () => {
         <div style={{ width: "50%" }} className="registerform">
             <form className="form-group" onSubmit={SubmitSignUp}>
 
-                
+               <h3 style={{textAlign:"center"}} className="registerheader">Create your account</h3> 
 
 
                 <div>
@@ -82,6 +83,9 @@ const SignUp = () => {
                 <br />
                 <div>
                     <button className="btn btn-success" style={{ width: "100%" }}>Sign Up</button>
+                    <div style={{textAlign:"center"}}>
+                     <span>Already have an account?</span> <Link to="/login">Login In</Link>
+                    </div>
                 </div>
 
             </form>
