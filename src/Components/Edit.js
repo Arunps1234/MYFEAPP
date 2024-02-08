@@ -1,16 +1,15 @@
-import React, {useState} from 'react'
-import "./Create.css"
-import axios from "axios"
-import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 
-const Create = () =>{
+const Edit = () =>{
+
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState();
     const [gender, setGender] = useState("")
-
-    const naviagte = useNavigate()
+    const {id} = useParams()
 
     const data = {
         firstname,
@@ -20,18 +19,32 @@ const Create = () =>{
         gender
     }
 
-    const submitCreate = (e) =>{
+    const submitEdit = (e) =>{
         e.preventDefault()
-        axios.post("http://localhost:5080/API/User/create",data ).then(res=>{
-            alert("User Created Successfully!")
-            naviagte("/home")
-        }).catch(err=>{
-            console.log(err)
-        })
+console.log(data)
     }
+
+    useEffect(()=>{
+axios.get(`http://localhost:5080/API/User/getUser/${id}`).then(res=>{
+    console.log(res)
+    setFirstname(res.data.firstname)
+    setLastname(res.data.lastname)
+    setEmail(res.data.email)
+    setPhone(res.data.phone)
+    setGender(res.data.gender)
+
+}).catch(err=>{
+    console.log(err)
+})
+    },[])
+
     return(
-        <div style={{width:"50%"}} className='createform'>
-<form className='form-group' onSubmit={submitCreate}>
+        <div>
+
+
+
+<div style={{width:"50%"}} className='createform'>
+<form className='form-group' onSubmit={submitEdit}>
 
 <div>
     <label className='form-label'>FirstName</label>
@@ -69,12 +82,15 @@ const Create = () =>{
 
 
 <div>
-    <button className='btn btn-success' style={{width:"100%"}}>Crete</button>
+    <button className='btn btn-success' style={{width:"100%"}}>Update</button>
 </div>
 
 </form>
         </div>
+
+
+        </div>
     )
 }
 
-export default Create
+export default Edit

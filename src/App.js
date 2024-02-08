@@ -1,6 +1,7 @@
 import SignUp from "./Components/SignUp";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
+import Edit from "./Components/Edit";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import axios from "axios";
 import Create from "./Components/Create";
@@ -16,6 +17,8 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/Home" element={<Home/>} />
         <Route path="/create" element={<Create/>} />
+        <Route path="/edit/:id" element={<Edit/>} />
+
 
       </Routes>
       </BrowserRouter>
