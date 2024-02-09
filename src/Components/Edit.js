@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Edit = () =>{
 
@@ -10,6 +11,7 @@ const Edit = () =>{
     const [phone, setPhone] = useState();
     const [gender, setGender] = useState("")
     const {id} = useParams()
+    const navigate = useNavigate()
 
     const data = {
         firstname,
@@ -19,10 +21,6 @@ const Edit = () =>{
         gender
     }
 
-    const submitEdit = (e) =>{
-        e.preventDefault()
-console.log(data)
-    }
 
     useEffect(()=>{
 axios.get(`http://localhost:5080/API/User/getUser/${id}`).then(res=>{
@@ -38,13 +36,25 @@ axios.get(`http://localhost:5080/API/User/getUser/${id}`).then(res=>{
 })
     },[])
 
+
+    const updateUser = (e) =>{
+        e.preventDefault()
+        axios.put(`http://localhost:5080/API/User/update/${id}`, data).then(res=>{
+alert("User details updated successufully!")
+navigate("/home")
+
+}).catch(err=>{
+            console.log(err)
+        })
+    }
+
     return(
         <div>
 
 
 
 <div style={{width:"50%"}} className='createform'>
-<form className='form-group' onSubmit={submitEdit}>
+<form className='form-group' onSubmit={updateUser}>
 
 <div>
     <label className='form-label'>FirstName</label>

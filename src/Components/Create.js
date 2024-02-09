@@ -23,10 +23,12 @@ const Create = () =>{
     const submitCreate = (e) =>{
         e.preventDefault()
         axios.post("http://localhost:5080/API/User/create",data ).then(res=>{
+            console.log(res)
             alert("User Created Successfully!")
             naviagte("/home")
         }).catch(err=>{
-            console.log(err)
+            alert(err.response.data.msg)
+            naviagte("/home")
         })
     }
     return(

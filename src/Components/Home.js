@@ -9,9 +9,12 @@ const Home = () => {
     const [users, setUsers] = useState([])
     const [deletemessage, setDeletemessage] = useState(false)
     const [searchvalue, setSearch] = useState("")
+
+    const [finalUser, setFinalUser] = useState([])
     useEffect(() => {
         axios.get("http://localhost:5080/API/User/getUsers").then(res => {
             setUsers(res.data)
+            console.log(users)
         }).catch(err => {
             console.log(err)
         })
@@ -56,7 +59,13 @@ const navigate = useNavigate()
 
     const editUser = (id) =>{
         navigate(`/edit/${id}`)
+
+        
     }
+
+
+    const filterUser = users.filter(user=>user.firstname.toLowerCase().includes(searchvalue))
+    console.log(filterUser)
     
     return (
         <>
@@ -69,7 +78,7 @@ const navigate = useNavigate()
 </div>
 
 <div style={{float:"right", marginRight:"5px"}}>
-<input type="search" value={searchvalue} onChange={(e)=>setSearch(e.target.value)} /></div>
+<input type="search" value={searchvalue} onChange={(e)=>setSearch(e.target.value)}  placeholder ="Search user..." style={{borderRadius:"10px", }}/></div>
 
            
             <div style={{ margin: "50px" }}>
@@ -89,36 +98,25 @@ const navigate = useNavigate()
 
 
                     <tbody>
-                        { users.length > 0 ? 
-                            users.map((user, i) => (
-                                <tr key={i}>
-                                    <td>{i+1}</td>
-                                    <td>{user.firstname}</td>
-                                    <td>{user.lastname}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
-                                    <td>{user.gender}</td>
-                                    <td >
+{
+                    users.filter(user=>user.firstname.toLowerCase().includes(searchvalue)).  map((val,i)=>(
+                        <tr>
+                            <td>{i+1}</td>
+                            <td>{val.firstname}</td>
+                            <td>{val.lastname}</td>
+                            <td>{val.email}</td>
+                            <td>{val.phone}</td>
+                            <td>{val.gender}</td>
+                            <td>{val.gender =="Male" ? <img src={Male}  style={{width:"70px", height : "70px"}}/> : <img src={Female}   style={{width:"70px", height : "70px"}}/>} </td>
+<td>
+    <button className='btn btn-warning' onClick={()=>editUser(val._id)} style={{width:"70px"}} >Edit</button> &nbsp;
+    <button className='btn btn-danger' onClick={()=>deleteUser(val._id, val.firstname)} style={{width:"70px"}}>Delete</button>
+</td>
 
-                                        {
-                                            user.gender =="Male" ? 
-                                            <img src={Male} style={{width:"80px", height:"80px"}}/>
-                                            : 
-                                            <img src={Female} style={{width:"80px", height:"80px"}}/>
-                                        }
-                                    </td>
-                                    <td style={{display:"flex"}}>
-                                        <button className='btn btn-warning' style={{ width: "100px" }} onClick={()=>editUser(user._id)}>Edit</button> &nbsp;
-                                        <button className='btn btn-danger' style={{ width: "100px" }} onClick={() => deleteUser(user._id, user.firstname)}> Delete</button>
-
-                                    </td>
-
-
-
-                                </tr>
-                            )) : <div >No User found</div>
-                        }
-                    </tbody>
+                        </tr>
+                    )) 
+}      
+                       </tbody>
                 </table>
             </div>
         </>
